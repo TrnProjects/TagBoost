@@ -1,0 +1,3 @@
+const CONFIG = {
+    apiKey: "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"
+};

@@ -1,0 +1,36 @@
+{
+    "art": [
+        "abstract art",
+        "modern painting",
+        "minimalist print",
+        "wall decor"
+    ],
+    "fashion": [
+        "vintage t-shirt",
+        "aesthetic hoodie",
+        "y2k clothing",
+        "streetwear"
+    ],
+    "stickers": [
+        "cute sticker pack",
+        "aesthetic stickers",
+        "vinyl waterproof sticker"
+    ],
+    "photography": [
+        "nature photography",
+        "black and white photo",
+        "landscape print"
+    ],
+    "retro": [
+        "retro poster",
+        "80s aesthetic",
+        "vaporwave",
+        "synthwave"
+    ],
+    "animals": [
+        "cute cat art",
+        "dog illustration",
+        "wildlife painting",
+        "bird drawing"
+    ]
+}

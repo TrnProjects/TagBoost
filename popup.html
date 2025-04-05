@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TagBoost - AI SEO Generator</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div id="popup-container">
+        <h2>🛠️ TagBoost - AI SEO Generator</h2>
+
+        <div id="drop-area">
+            <p>📤 Drag & Drop or Click to Upload</p>
+            <input type="file" id="image-upload" accept="image/*" hidden>
+            <div id="image-box">
+                <img id="image-preview" style="display: none;">
+            </div>
+        </div>
+
+        <button id="fillData">🚀 Auto-Fill</button>
+
+        <div class="input-group">
+            <label>Title:</label>
+            <textarea id="title"></textarea>
+            <div class="button-group">
+                <button class="regen-btn" onclick="regenerate('title')">🔄 Re-generate</button>
+                <button class="send-btn" onclick="sendToSite('title')">📤 Send to Site</button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Description:</label>
+            <textarea id="description"></textarea>
+            <div class="button-group">
+                <button class="regen-btn" onclick="regenerate('description')">🔄 Re-generate</button>
+                <button class="send-btn" onclick="sendToSite('description')">📤 Send to Site</button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>SEO Tags:</label>
+            <textarea id="tags"></textarea>
+            <div class="button-group">
+                <button class="regen-btn" onclick="regenerate('tags')">🔄 Re-generate</button>
+                <button class="send-btn" onclick="sendToSite('tags')">📤 Send to Site</button>
+            </div>
+        </div>
+
+        <button id="bulk-send">📤 Send All to Site</button>
+    </div>
+
+    <script src="scripts/popup.js"></script>
+</body>
+</html>

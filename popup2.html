@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TagBoost Design</title>
+    <link id="themeStylesheet" rel="stylesheet" href="styles/default.css">
+</head>
+
+<body>
+    <div class="popup-container">
+        <header class="popup-header">
+            <h1>TagBoost</h1>
+            <p>Customize your experience</p>
+        </header>
+
+        <div class="theme-selection">
+            <label for="themeSelector">Choose a Theme:</label>
+            <select id="themeSelector">
+                <option value="styles/default.css">Default</option>
+                <option value="styles/marble.css">Marble</option>
+                <option value="styles/dark.css">Dark</option>
+                <option value="styles/fire.css">Fire</option>
+                <option value="styles/sad.css">Sad</option>
+            </select>
+            <button id="applyTheme">Apply Theme</button>
+        </div>
+
+        <div class="upload-section">
+            <label for="imageUpload" class="upload-box">
+                <span>📤 Upload an Image</span>
+                <input type="file" id="imageUpload" accept="image/*">
+            </label>
+        </div>
+
+        <div class="input-section">
+            <label for="title">Title:</label>
+            <input type="text" id="title" placeholder="Generated title...">
+
+            <label for="description">Description:</label>
+            <textarea id="description" placeholder="Generated description..."></textarea>
+
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" placeholder="Generated tags...">
+        </div>
+
+        <button id="generate-btn">✨ Generate AI Content</button>
+        <button id="save-btn">💾 Save</button>
+
+        <footer class="popup-footer">
+            <p>Powered by TagBoost AI</p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
