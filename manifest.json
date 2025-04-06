@@ -43,8 +43,9 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.etsy.com/*",
-                "https://www.redbubble.com/*"
+                "https://www.redbubble.com/*",
+                "https://redbubble.com/*",
+                "https://*.redbubble.com/*"
             ],
             "js": [
                 "scripts/content.js"

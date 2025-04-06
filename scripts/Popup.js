@@ -13,6 +13,26 @@ document.addEventListener("DOMContentLoaded", function () {
     let uploadedImage = null;
     const apiKey = "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"; // 🔐 Zamijeni s pravim API ključem
 
+    document.getElementById("regen-title").addEventListener("click", () => {
+        regenerate("title");
+    });
+    document.getElementById("regen-description").addEventListener("click", () => {
+        regenerate("description");
+    });
+    document.getElementById("regen-tags").addEventListener("click", () => {
+        regenerate("tags");
+    });
+    document.getElementById("send-title").addEventListener("click", () => {
+        sendToSite("title");
+    });
+    document.getElementById("send-description").addEventListener("click", () => {
+        sendToSite("description");
+    });
+    document.getElementById("send-tags").addEventListener("click", () => {
+        sendToSite("tags");
+    });
+
+
     // 📌 Drag & Drop funkcionalnost
     ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
         dropArea.addEventListener(eventName, (event) => {
@@ -145,25 +165,95 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("⚠️ Greška pri dohvaćanju AI podataka:", error);
         }
     }
+    // 🔁 Regeneracija pojedinačnih tekstualnih polja
+    async function regenerateText(field, originalText) {
+        console.log(`🔁 Regeneriram tekst za: ${field}`);
+        try {
+            const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-4-turbo",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "You are an AI assistant trained to improve and rewrite product listing content for artwork. Respond only with the improved version, no explanations."
+                        },
+                        {
+                            role: "user",
+                            content: `Improve this ${field}:\n\n"${originalText}"`
+                        }
+                    ],
+                    max_tokens: 300
+                })
+            });
+
+            const result = await response.json();
+            const newText = result.choices?.[0]?.message?.content?.trim();
+
+            if (!newText) {
+                console.error("❌ AI nije vratio novi tekst.");
+                return;
+            }
+
+            // 🔁 Upisujemo novi tekst u odgovarajuće polje
+            switch (field) {
+                case "title":
+                    titleField.dataset.original = titleField.value;
+                    titleField.value = newText;
+                    break;
+                case "description":
+                    descriptionField.dataset.original = descriptionField.value;
+                    descriptionField.value = newText;
+                    break;
+                case "tags":
+                    tagsField.dataset.original = tagsField.value;
+                    tagsField.value = newText;
+                    break;
+            }
+
+            console.log(`✅ Novi ${field} generiran:`, newText);
+
+        } catch (err) {
+            console.error("⚠️ Greška u regeneraciji teksta:", err);
+        }
+    }
+    function regenerate(field) {
+        let originalText = "";
+        switch (field) {
+            case "title":
+                originalText = titleField.value;
+                break;
+            case "description":
+                originalText = descriptionField.value;
+                break;
+            case "tags":
+                originalText = tagsField.value;
+                break;
+            default:
+                console.error("❌ Nepoznat field:", field);
+                return;
+        }
+
+        regenerateText(field, originalText);
+    }
 
     // 📌 Slanje podataka u Redbubble/Etsy polja
     sendToSiteButton.addEventListener("click", () => {
-        const data = {
-            action: "fillData",
-            title: titleField.value,
-            description: descriptionField.value,
-            tags: tagsField.value
-        };
-
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (tabs.length === 0) {
-                alert("⚠️ Nema otvorenog taba s Redbubble ili Etsy!");
-                return;
+        chrome.runtime.sendMessage({
+            type: "SEND_ALL",
+            payload: {
+                title: titleField.value,
+                description: descriptionField.value,
+                tags: tagsField.value
             }
-            chrome.tabs.sendMessage(tabs[0].id, data);
-            console.log("📤 Podaci poslani na stranicu.");
         });
+        console.log("📤 Sva polja poslana preko background.js");
     });
+
 
     function resizeImage(file, maxWidth, maxHeight, callback) {
         const reader = new FileReader();
@@ -192,6 +282,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 callback(resizedBase64);
             };
         };
+    }
+    function sendToSite(field) {
+        let value = "";
+
+        switch (field) {
+            case "title":
+                value = titleField.value;
+                break;
+            case "description":
+                value = descriptionField.value;
+                break;
+            case "tags":
+                value = tagsField.value;
+                break;
+            default:
+                console.warn("Unknown field:", field);
+                return;
+        }
+
+        chrome.runtime.sendMessage({
+            type: "SEND_" + field.toUpperCase(),
+            payload: value
+        });
+
+        console.log(`📤 Poslano polje: ${field} →`, value);
     }
 });
 
