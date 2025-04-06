@@ -1,0 +1,16 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# OS junk
+*.log
+
+# Sensitive data
+*.env
+
+# Chrome extension artifacts
+*.zip
