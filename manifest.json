@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "TagBoost - Etsy & Redbubble AI Uploader & Design Customizer",
-    "version": "1.3",
+    "version": "1.4",
     "description": "Automatski popunjava Etsy i Redbubble oglase, optimizira SEO i prilagođava dizajn ekstenzije.",
     "permissions": [
         "tabs",
@@ -14,7 +14,11 @@
     ],
     "host_permissions": [
         "https://www.etsy.com/*",
+        "https://etsy.com/*",
+        "https://*.etsy.com/*",
         "https://www.redbubble.com/*",
+        "https://redbubble.com/*",
+        "https://*.redbubble.com/*",
         "https://api.openai.com/*"
     ],
     "web_accessible_resources": [
@@ -22,10 +26,12 @@
             "resources": [
                 "popup.html",
                 "styles/*.css",
-                "images/*.jpg"
+                "images/*.jpg",
+                "Images/*.png",
+                "Images/*.jpg"
             ],
             "matches": [
-                "chrome-extension://*/*"
+                "<all_urls>"
             ]
         }
     ],
@@ -45,7 +51,10 @@
             "matches": [
                 "https://www.redbubble.com/*",
                 "https://redbubble.com/*",
-                "https://*.redbubble.com/*"
+                "https://*.redbubble.com/*",
+                "https://www.etsy.com/*",
+                "https://etsy.com/*",
+                "https://*.etsy.com/*"
             ],
             "js": [
                 "scripts/content.js"
