@@ -1,6 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("📌 TagBoost Popup Loaded!");
 
+    const themeSelector = document.getElementById("theme-select");
+    const themeStylesheet = document.getElementById("theme-stylesheet");
+    const body = document.body;
+
+    // ✅ Glatka promjena teme
+    body.style.transition = "opacity 0.5s ease-in-out";
+
+    // ✅ Učitavanje spremljene teme iz Chrome Storage-a
+    chrome.storage.sync.get("selectedTheme", function (data) {
+        if (data.selectedTheme) {
+            themeStylesheet.href = data.selectedTheme;
+            if (themeSelector)
+                themeSelector.value = data.selectedTheme.replace("styles/", "").replace(".css", "");
+        }
+    });
+
+    // ✅ Promjena veličine prozora
+    chrome.runtime.onMessage.addListener((message) => {
+        if (message.action === "resize") {
+            document.documentElement.style.width = message.width + "px";
+            document.documentElement.style.height = message.height + "px";
+            document.body.style.width = message.width + "px";
+            document.body.style.height = message.height + "px";
+            const popupContainer = document.querySelector(".popup-container");
+            if (popupContainer) {
+                popupContainer.style.width = "100%";
+                popupContainer.style.height = "100%";
+            }
+        }
+    });
+
+    // ✅ Odabir nove teme
+    if (themeSelector) {
+        themeSelector.addEventListener("change", function () {
+            const selectedTheme = themeSelector.value;
+            const newThemePath = `styles/${selectedTheme}.css`;
+
+            body.style.opacity = "0";
+
+            setTimeout(() => {
+                if (themeStylesheet) themeStylesheet.href = newThemePath;
+
+                chrome.storage.sync.set({ "selectedTheme": newThemePath }, function () {
+                    console.log("✅ Nova tema spremljena:", newThemePath);
+                });
+
+                body.style.opacity = "1";
+            }, 500);
+        });
+    }
+
     const dropArea = document.getElementById("drop-area");
     const fileInput = document.getElementById("image-upload");
     const imagePreview = document.getElementById("image-preview");
