@@ -1,0 +1,49 @@
+body {
+    background-image: url("../Images/sad.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    position: fixed !important;
+    color: #d8c5c0 !important;
+}
+
+/* Popup Container */
+.popup-container {
+    background: rgba(40, 40, 40, 0.4) !important;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(180, 160, 160, 0.5) !important;
+    box-shadow: 0px 4px 15px rgba(180, 160, 160, 0.3) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Osiguraj da unutarnji elementi imaju odgovarajući kontrast */
+.popup-container * {
+    color: #e0d0cb !important;
+    background: none !important;
+    border-color: rgba(190, 170, 170, 0.5) !important;
+}
+
+/* 📏 Smanjen razmak između input polja (Title, Description) i gumbiju ispod */
+.input-group textarea {
+    margin-bottom: -10px !important;
+}
+
+/* 📏 Povećan razmak između gumba i sljedeće sekcije (Description, SEO Tags) */
+.button-group {
+    margin-bottom: 15px !important;
+}
+
+/* Dugmad */
+button {
+    background: rgba(150, 120, 120, 0.2) !important;
+    color: white !important;
+}
+
+button:hover {
+    background: rgba(200, 160, 160, 0.5) !important;
+}

@@ -1,0 +1,49 @@
+body {
+    background-image: url("../Images/fire.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    position: fixed !important;
+    color: white !important;
+}
+
+/* Popup Container */
+.popup-container {
+    background: rgba(50, 10, 10, 0.3) !important;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 100, 100, 0.6) !important;
+    box-shadow: 0px 4px 15px rgba(255, 80, 80, 0.4) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Osiguraj da unutarnji elementi imaju odgovarajući kontrast */
+.popup-container * {
+    color: rgb(255, 220, 220) !important;
+    background: none !important;
+    border-color: rgba(255, 100, 100, 0.5) !important;
+}
+
+/* 📏 Smanjen razmak između input polja (Title, Description) i gumbiju ispod */
+.input-group textarea {
+    margin-bottom: -10px !important;
+}
+
+/* 📏 Povećan razmak između gumba i sljedeće sekcije (Description, SEO Tags) */
+.button-group {
+    margin-bottom: 15px !important;
+}
+
+/* Dugmad */
+button {
+    background: rgba(255, 80, 80, 0.2) !important;
+    color: white !important;
+}
+
+button:hover {
+    background: rgba(255, 120, 120, 0.5) !important;
+}
