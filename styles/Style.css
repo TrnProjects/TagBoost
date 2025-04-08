@@ -1,38 +1,51 @@
-/* ✅ Osnovni stilovi */
+/* 🎨 GLOBALNA TEMA + VARIJABLE */
 body {
     font-family: Arial, sans-serif;
-    width: 400px;
-    padding: 15px;
     background-color: var(--bg-color, #f8f8f8);
-    /* Varijabla umjesto fiksne boje */
-    text-align: center;
+    color: var(--text-color, #333);
+    background-size: cover !important;
+    background-position: center !important;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* ✅ Glavni kontejner */
+/* 📦 POPUP KONTEJNER */
+.popup-container,
 #popup-container {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* ✅ Naslov */
-h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: var(--text-color, black);
-}
-
-/* ✅ Drop-area (kutija za upload slike) */
+/* 🖼️ DROP AREA */
 #drop-area {
     width: 100%;
     max-width: 350px;
-    padding: 20px;
+    padding: 15px;
     border: 2px dashed var(--border-color, #999);
     background-color: var(--box-bg, #fff);
     cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     margin-bottom: 10px;
-    position: relative;
-    transition: background-color 0.3s ease-in-out;
+    box-sizing: border-box;
 }
 
 #drop-area.dragover {
@@ -40,22 +53,20 @@ h2 {
     border-color: var(--highlight-color, #007bff);
 }
 
-/* ✅ Kontejner za prikaz slike */
+/* 🖼️ IMAGE PREVIEW BOX */
 #image-box {
     width: 100%;
     max-width: 320px;
-    height: auto;
-    max-height: 250px;
+    height: 180px;
     overflow: hidden;
-    position: relative;
     border: 2px solid var(--border-color, #ccc);
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--box-bg, #f8f8f8);
+    box-sizing: border-box;
 }
 
-/* ✅ Slika - prilagođena za normalne dimenzije */
 #image-preview {
     width: auto;
     height: auto;
@@ -65,16 +76,16 @@ h2 {
     display: block;
 }
 
-/* ✅ Input sekcije */
+/* ✍️ INPUT GRUPE */
 .input-group {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     max-width: 350px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
-label {
+.input-group label {
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
     color: var(--text-color, black);
@@ -82,44 +93,94 @@ label {
 
 textarea {
     width: 100%;
-    height: 60px;
+    min-height: 60px;
     resize: none;
     padding: 5px;
     font-size: 14px;
     background-color: var(--input-bg, #fff);
     color: var(--text-color, black);
     border: 1px solid var(--border-color, #ccc);
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-/* ✅ Gumb za slanje svih podataka */
-#bulk-send {
-    margin-top: 10px;
-    background-color: var(--button-bg, #28a745);
-    color: var(--button-text, white);
+#description {
+    min-height: 120px;
+}
+
+/* 🧩 GUMBI GRUPA */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    padding: 0;
+}
+
+.re-gen-btn,
+.regen-btn {
+    flex: 1;
     padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg, #007bff);
+    color: var(--button-text, white);
+}
+
+.send-btn {
+    flex: 0;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--button-bg, #007bff);
+    color: var(--button-text, white);
+}
+
+.re-gen-btn:hover,
+.regen-btn:hover,
+.send-btn:hover {
+    background-color: var(--button-hover, #0056b3);
+}
+
+/* 📤 SEND ALL BUTTON */
+#bulk-send {
+    margin-top: 15px;
+    background-color: var(--bulk-bg, #28a745);
+    color: var(--button-text, white);
+    padding: 12px;
     border: none;
     cursor: pointer;
     width: 100%;
     max-width: 350px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #bulk-send:hover {
-    background-color: var(--button-hover, #218838);
+    background-color: var(--bulk-hover, #218838);
 }
 
-/* ✅ Gumbi za regeneraciju */
-.regen-btn,
-.send-btn {
-    background-color: var(--button-bg, #007bff);
-    color: var(--button-text, white);
-    padding: 5px;
-    border: none;
-    cursor: pointer;
-    margin-top: 5px;
-    width: 100%;
+/* 🎨 THEME SELECTOR */
+.theme-container select#theme-select {
+    background: transparent !important;
+    color: var(--text-color, black) !important;
+    border: 1px solid var(--border-color, #ccc) !important;
 }
 
-.regen-btn:hover,
-.send-btn:hover {
-    background-color: var(--button-hover, #0056b3);
+.theme-container select#theme-select:focus {
+    background: rgba(50, 50, 50, 0.9) !important;
+    color: white !important;
+}
+
+.theme-container select option {
+    background-color: #c2b5ad !important;
+    color: #2a2a2a !important;
 }
