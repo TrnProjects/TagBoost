@@ -60,9 +60,155 @@ document.addEventListener("DOMContentLoaded", function () {
     const descriptionField = document.getElementById("description");
     const tagsField = document.getElementById("tags");
     const sendToSiteButton = document.getElementById("bulk-send");
+    const descriptionHistoryKey = "description_history";
+    const tagsHistoryKey = "tags_history";
+    const descriptionHistoryDropdown = document.getElementById("description-history-dropdown");
+    const tagsHistoryDropdown = document.getElementById("tags-history-dropdown");
 
     let uploadedImage = null;
     const apiKey = CONFIG.apiKey; // 🔐 API key iz config.js
+
+
+    function saveToHistory(field, key, dropdown, value) {
+        if (!value.trim()) return;
+
+        chrome.storage.local.get([key], function (result) {
+            let history = result[key] || [];
+
+            history = history.filter(item => item !== value);
+            history.unshift(value);
+            if (history.length > 20) history = history.slice(0, 20);
+
+            chrome.storage.local.set({ [key]: history }, function () {
+                console.log(`📝 ${field} spremljen u povijest.`);
+                renderHistory(dropdown, history, field);
+            });
+        });
+    }
+
+    function renderHistory(dropdown, historyArray, field) {
+        if (!dropdown) return;
+        dropdown.innerHTML = "";
+
+        historyArray.forEach(entry => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            item.textContent = entry;
+            item.title = `Klikni za ubaciti ${field}`;
+
+            item.addEventListener("click", () => {
+                if (field === "description") descriptionField.value = entry;
+                if (field === "tags") tagsField.value = entry;
+            });
+
+            dropdown.appendChild(item);
+        });
+    }
+    descriptionField.addEventListener("mouseenter", () => {
+        chrome.storage.local.get([descriptionHistoryKey], function (result) {
+            const history = result[descriptionHistoryKey] || [];
+            if (history.length > 0) {
+                renderHistory(descriptionHistoryDropdown, history, "description");
+                descriptionHistoryDropdown.classList.remove("hidden");
+            }
+        });
+    });
+
+
+    descriptionField.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+            descriptionHistoryDropdown.classList.add("hidden");
+        }, 300);
+    });
+
+    tagsField.addEventListener("mouseenter", () => {
+        chrome.storage.local.get([tagsHistoryKey], function (result) {
+            const history = result[tagsHistoryKey] || [];
+            if (history.length > 0) {
+                renderHistory(tagsHistoryDropdown, history, "tags");
+                tagsHistoryDropdown.classList.remove("hidden");
+            }
+        });
+    });
+
+    tagsField.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+            tagsHistoryDropdown.classList.add("hidden");
+        }, 300);
+    });
+
+    document.getElementById("regen-description").addEventListener("click", () => {
+        saveToHistory("description", descriptionHistoryKey, descriptionHistoryDropdown, descriptionField.value);
+    });
+
+    document.getElementById("regen-tags").addEventListener("click", () => {
+        saveToHistory("tags", tagsHistoryKey, tagsHistoryDropdown, tagsField.value);
+    });
+
+    document.getElementById("fillData").addEventListener("click", () => {
+        setTimeout(() => {
+            saveToHistory("description", descriptionHistoryKey, descriptionHistoryDropdown, descriptionField.value);
+            saveToHistory("tags", tagsHistoryKey, tagsHistoryDropdown, tagsField.value);
+        }, 2000);
+    });
+
+    // 🔽 Local History - samo za Title
+    const titleHistoryKey = "title_history";
+    const titleHistoryDropdown = document.getElementById("title-history-dropdown");
+
+    // Sprema unos u lokalnu memoriju
+    function saveTitleToHistory(newTitle) {
+        if (!newTitle.trim()) return;
+
+        chrome.storage.local.get([titleHistoryKey], function (result) {
+            let history = result[titleHistoryKey] || [];
+            history = history.filter(item => item !== newTitle);
+            history.unshift(newTitle);
+            if (history.length > 20) history = history.slice(0, 20);
+            chrome.storage.local.set({ [titleHistoryKey]: history }, function () {
+                renderTitleHistory(history);
+            });
+        });
+    }
+
+    function renderTitleHistory(historyArray) {
+        if (!titleHistoryDropdown) return;
+        titleHistoryDropdown.innerHTML = "";
+        historyArray.forEach(title => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            item.textContent = title;
+            item.title = "Klikni za ubaciti ovaj naslov";
+            item.addEventListener("click", () => {
+                titleField.value = title;
+            });
+            titleHistoryDropdown.appendChild(item);
+        });
+    }
+
+    titleField.addEventListener("mouseenter", () => {
+        chrome.storage.local.get([titleHistoryKey], function (result) {
+            const history = result[titleHistoryKey] || [];
+            renderTitleHistory(history);
+            titleHistoryDropdown.classList.remove("hidden");
+        });
+    });
+
+    titleField.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+            titleHistoryDropdown.classList.add("hidden");
+        }, 300);
+    });
+    // Spremanje unosa svaki put kad se klikne "Generate" ili "Regen"
+    document.getElementById("regen-title").addEventListener("click", () => {
+        saveTitleToHistory(titleField.value);
+    });
+    document.getElementById("fillData").addEventListener("click", () => {
+        // Spremi ga kasnije kad dođe novi response
+        setTimeout(() => {
+            saveTitleToHistory(titleField.value);
+        }, 2000);
+    });
 
     document.getElementById("regen-title").addEventListener("click", () => {
         regenerate("title");
