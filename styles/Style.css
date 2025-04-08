@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-/* 📌 GLOBALNI STILOVI */
+/* === GLOBAL === */
 html,
 body {
     font-family: 'Poppins', sans-serif;
@@ -18,7 +18,6 @@ body {
     transition: opacity 0.5s ease-in-out;
 }
 
-/* 📦 POPUP KONTEJNER */
 .popup-container {
     width: 100%;
     height: 100%;
@@ -33,13 +32,11 @@ body {
 .popup-container>* {
     width: auto !important;
     min-width: 100% !important;
-    max-width: none !important;
 }
 
-/* 🖼️ DROP AREA */
+/* === DROP AREA === */
 #drop-area {
     width: 100%;
-    max-width: none;
     padding: 15px;
     border: 2px dashed #007bff;
     background-color: #fff;
@@ -49,8 +46,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-    box-sizing: border-box;
+    transition: background-color 0.3s ease-in-out;
     margin-bottom: 10px;
 }
 
@@ -59,7 +55,6 @@ body {
     border-color: #007bff;
 }
 
-/* 🖼️ IMAGE BOX */
 #image-box {
     width: 100%;
     height: 180px;
@@ -69,23 +64,13 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #f8f8f8;
-    box-sizing: border-box;
 }
 
-#image-preview {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-/* ✍️ INPUT POLJA */
+/* === TEXTAREE === */
 .input-group {
     width: calc(100% - 20px);
-    margin-bottom: 0px;
     box-sizing: border-box;
+    margin-bottom: 0px;
 }
 
 .input-group label {
@@ -93,10 +78,6 @@ body {
     font-weight: bold;
     margin-bottom: 5px;
     color: #6c5b7b;
-}
-
-.input-group textarea {
-    margin-bottom: 5px !important;
 }
 
 textarea {
@@ -108,19 +89,19 @@ textarea {
     border-radius: 8px;
     background: #f8f4f2;
     box-sizing: border-box;
+    resize: vertical;
 }
 
 #description {
     min-height: 120px !important;
 }
 
-/* 🧩 GUMBI */
+/* === GUMBI === */
 .button-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 5px;
-    padding: 0;
     margin-bottom: 15px;
 }
 
@@ -145,9 +126,9 @@ textarea {
 
 .send-btn {
     flex: 0;
-    white-space: nowrap;
     background-color: #eac8cf;
     color: #6c5b7b;
+    white-space: nowrap;
 }
 
 .re-gen-btn:hover,
@@ -159,42 +140,7 @@ textarea {
     background-color: #d9a7af;
 }
 
-/* 📤 DUGME ZA SVE */
-#bulk-send {
-    margin-top: 15px;
-    background-color: #ff9800;
-    color: white;
-    padding: 12px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-#bulk-send:hover {
-    background-color: #e68a00;
-}
-
-/* 🎨 TEMA SELECTOR */
-.theme-container select#theme-select {
-    background: transparent !important;
-    color: #494747 !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-}
-
-.theme-container select#theme-select:focus {
-    background: rgba(50, 50, 50, 0.9) !important;
-    color: white !important;
-}
-
-.theme-container select option {
-    background-color: #c2b5ad !important;
-    color: #2a2a2a !important;
-}
-
-/* 🎯 Gumb za generiranje sadržaja */
+/* === GENERATE BUTTON === */
 #fillData {
     margin-top: 10px;
     background-color: #6c5b7b;
@@ -212,4 +158,169 @@ textarea {
 
 #fillData:hover {
     background-color: #4a3b57;
+}
+
+/* === TEMA SELECTOR === */
+.theme-container select#theme-select {
+    background: transparent !important;
+    color: #494747 !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.theme-container select#theme-select:focus {
+    background: rgba(50, 50, 50, 0.9) !important;
+    color: white !important;
+}
+
+.theme-container select option {
+    background-color: #c2b5ad !important;
+    color: #2a2a2a !important;
+}
+
+/* === HISTORY DROPDOWN ZA TITLE === */
+#title-history-container {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+
+#title-history-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff !important;
+    color: #222 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 13px;
+}
+
+
+
+/* Hover aktivacija – SAMO kad je miš nad #title ili dropdownom */
+#title:hover+#title-history-container .history-dropdown,
+#title-history-container:hover .history-dropdown {
+    display: block !important;
+}
+
+/* Stavke unutar dropdowna */
+
+#title-history-dropdown .history-item {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    color: #333;
+    background-color: #fff;
+}
+
+#title-history-dropdown .history-item:hover {
+    background-color: #f3f0f5;
+}
+
+#title-history-dropdown .history-item:last-child {
+    border-bottom: none;
+}
+
+/* Tooltip */
+.history-item .tooltip {
+    visibility: hidden;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 20;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.history-item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Gumbi uz svaku verziju (ako dodamo u budućnosti) */
+.history-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.history-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 2px;
+    color: #777;
+}
+
+.history-actions button:hover {
+    color: #000;
+}
+
+/* Favoriti */
+.favorite {
+    color: gold;
+    font-weight: bold;
+}
+
+/* === HISTORY DROPDOWN ZA DESCRIPTION === */
+#description-history-container {
+    margin-top: 5px;
+    background-color: #ffffff !important;
+    color: #222 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 13px;
+    z-index: 1000;
+}
+
+/* Isto za TAGS */
+#tags-history-container {
+    margin-top: 5px;
+    background-color: #ffffff !important;
+    color: #222 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 13px;
+    z-index: 1000;
+}
+
+#description:hover+#description-history-container,
+#description-history-container:hover {
+    display: block !important;
+}
+
+#tags:hover+#tags-history-container,
+#tags-history-container:hover {
+    display: block !important;
+}
+
+/* 🎯 Forsiraj tamnu boju teksta samo za history dropdown */
+#title-history-dropdown .history-item {
+    color: #2a2a2a !important;
+    background-color: #fff !important;
 }

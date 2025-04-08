@@ -8,7 +8,7 @@
 
     <!-- 🎨 Stilovi -->
     <link rel="stylesheet" href="styles/style.css">
-    <link id="theme-stylesheet" rel="stylesheet" href="styles/marble.css"> <!-- Početna tema -->
+    <link id="theme-stylesheet" rel="stylesheet" href="styles/marble.css"> <!-- Tema -->
 
     <!-- 📜 Skripta s AI logikom -->
     <script src="scripts/config.js"></script>
@@ -45,6 +45,14 @@
         <div class="input-group">
             <label for="title">Title:</label>
             <textarea id="title"></textarea>
+
+            <!-- 🧠 Povijest naslova -->
+            <div id="title-history-container" class="history-container">
+                <div class="history-dropdown hidden" id="title-history-dropdown">
+                    <!-- Dinamički sadržaj iz JS -->
+                </div>
+            </div>
+
             <div class="button-group">
                 <button id="regen-title" class="regen-btn">Re-generate</button>
                 <button id="send-title" class="send-btn">Send to Site</button>
