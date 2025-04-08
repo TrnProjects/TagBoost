@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sendToSiteButton = document.getElementById("bulk-send");
 
     let uploadedImage = null;
-    const apiKey = "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"; // 🔐 Zamijeni s pravim API ključem
+    const apiKey = CONFIG.apiKey; // 🔐 API key iz config.js
 
     document.getElementById("regen-title").addEventListener("click", () => {
         regenerate("title");
@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("send-tags").addEventListener("click", () => {
         sendToSite("tags");
     });
-
 
     // 📌 Drag & Drop funkcionalnost
     ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
@@ -160,15 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "content": [
                                 {
                                     "type": "text",
-                                    "text": `Analyze this image and generate a product listing in the following strict format:
-        
-                                        1️⃣ **Title:** A short, engaging, and relevant title for this artwork.
-                                        
-                                        2️⃣ **Description:** A single well-structured paragraph describing the artwork, focusing on its visual elements only. **Do not list** individual elements or features in bullet points. **Do not add material, printing, or shipping details**.
-        
-                                        3️⃣ **SEO Tags:** A list of comma-separated keywords that best describe this artwork. Do not use more than 12 tags.
-        
-                                        Ensure that the response strictly follows this format and does not contain any additional text.`
+                                    "text": `Analyze this image and generate a product listing in the following strict format:\n\n1️⃣ **Title:** A short, engaging, and relevant title for this artwork.\n\n2️⃣ **Description:** A single well-structured paragraph describing the artwork, focusing on its visual elements only. Do not list individual elements or features in bullet points. Do not add material, printing, or shipping details.\n\n3️⃣ **SEO Tags:** A list of comma-separated keywords that best describe this artwork. Do not use more than 12 tags.\n\nEnsure that the response strictly follows this format and does not contain any additional text.`
                                 },
                                 {
                                     "type": "image_url",
@@ -192,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const aiContent = result.choices[0].message.content;
                 console.log("📌 AI Text Response:", aiContent);
 
-                // 📌 Ispravno parsiranje odgovora
                 const titleMatch = aiContent.match(/1️⃣ \*\*Title:\*\* (.*)/);
                 const descriptionMatch = aiContent.match(/2️⃣ \*\*Description:\*\* ([\s\S]*?)3️⃣ \*\*SEO Tags:\*\*/);
                 const tagsMatch = aiContent.match(/3️⃣ \*\*SEO Tags:\*\* (.*)/);
@@ -216,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("⚠️ Greška pri dohvaćanju AI podataka:", error);
         }
     }
-    // 🔁 Regeneracija pojedinačnih tekstualnih polja
+
     async function regenerateText(field, originalText) {
         console.log(`🔁 Regeneriram tekst za: ${field}`);
         try {
@@ -250,7 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // 🔁 Upisujemo novi tekst u odgovarajuće polje
             switch (field) {
                 case "title":
                     titleField.dataset.original = titleField.value;
@@ -272,6 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("⚠️ Greška u regeneraciji teksta:", err);
         }
     }
+
     function regenerate(field) {
         let originalText = "";
         switch (field) {
@@ -292,7 +282,6 @@ document.addEventListener("DOMContentLoaded", function () {
         regenerateText(field, originalText);
     }
 
-    // 📌 Slanje podataka u Redbubble/Etsy polja
     sendToSiteButton.addEventListener("click", () => {
         chrome.runtime.sendMessage({
             type: "SEND_ALL",
@@ -304,7 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         console.log("📤 Sva polja poslana preko background.js");
     });
-
 
     function resizeImage(file, maxWidth, maxHeight, callback) {
         const reader = new FileReader();
@@ -334,6 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         };
     }
+
     function sendToSite(field) {
         let value = "";
 
@@ -360,4 +349,3 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(`📤 Poslano polje: ${field} →`, value);
     }
 });
-

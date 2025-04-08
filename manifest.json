@@ -28,7 +28,8 @@
                 "styles/*.css",
                 "images/*.jpg",
                 "Images/*.png",
-                "Images/*.jpg"
+                "Images/*.jpg",
+                "scripts/config.js"
             ],
             "matches": [
                 "<all_urls>"
@@ -61,5 +62,8 @@
             ],
             "run_at": "document_idle"
         }
-    ]
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    }
 }

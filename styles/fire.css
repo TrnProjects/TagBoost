@@ -47,3 +47,10 @@ button {
 button:hover {
     background: rgba(255, 120, 120, 0.5) !important;
 }
+
+/* 🖼️ Efekt kada je slika iznad drop zone */
+#drop-area.dragover {
+    background-color: rgba(255, 80, 80, 0.15) !important;
+    border-color: rgba(255, 100, 100, 0.9) !important;
+    transition: all 0.3s ease-in-out;
+}

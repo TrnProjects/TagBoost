@@ -3,15 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>TagBoost - AI SEO Generator</title>
+
+    <!-- 🎨 Stilovi -->
     <link rel="stylesheet" href="styles/style.css">
-    <link id="theme-stylesheet" rel="stylesheet" href="styles/marble.css">
+    <link id="theme-stylesheet" rel="stylesheet" href="styles/marble.css"> <!-- Početna tema -->
+
+    <!-- 📜 Skripta s AI logikom -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/Popup.js"></script>
 </head>
 
 <body>
     <div class="popup-container">
-        <h2>🛠️ TagBoost - AI SEO Generator</h2>
+        <h1>TagBoost - AI SEO Generator</h1>
+
+        <!-- 🎨 Izbor teme -->
         <div class="theme-container">
             <label for="theme-select">Choose Theme:</label>
             <select id="theme-select">
@@ -22,48 +30,49 @@
             </select>
         </div>
 
+        <!-- 📤 Upload slike -->
         <div id="drop-area">
-            <p>📤 Drag & Drop or Click to Upload</p>
+            <p>Drag & Drop or Click to Upload</p>
             <input type="file" id="image-upload" accept="image/*" hidden>
             <div id="image-box">
                 <img id="image-preview" style="display: none;">
             </div>
         </div>
 
-        <button id="fillData">🚀 Auto-Fill</button>
+        <button id="fillData">Generate</button>
 
+        <!-- 📝 Naslov -->
         <div class="input-group">
-            <label>Title:</label>
+            <label for="title">Title:</label>
             <textarea id="title"></textarea>
             <div class="button-group">
-                <button class="regen-btn" id="regen-title">🔄 Re-generate</button>
-                <button class="send-btn" id="send-title">📤 Send to Site</button>
+                <button id="regen-title" class="regen-btn">Re-generate</button>
+                <button id="send-title" class="send-btn">Send to Site</button>
             </div>
         </div>
 
+        <!-- 📝 Opis -->
         <div class="input-group">
-            <label>Description:</label>
+            <label for="description">Description:</label>
             <textarea id="description"></textarea>
             <div class="button-group">
-                <button class="regen-btn" id="regen-description">🔄 Re-generate</button>
-                <button class="send-btn" id="send-description">📤 Send to Site</button>
+                <button id="regen-description" class="regen-btn">Re-generate</button>
+                <button id="send-description" class="send-btn">Send to Site</button>
             </div>
         </div>
 
+        <!-- 🏷️ SEO tagovi -->
         <div class="input-group">
-            <label>SEO Tags:</label>
+            <label for="tags">SEO Tags:</label>
             <textarea id="tags"></textarea>
             <div class="button-group">
-                <button class="regen-btn" id="regen-tags">🔄 Re-generate</button>
-                <button class="send-btn" id="send-tags">📤 Send to Site</button>
+                <button id="regen-tags" class="regen-btn">Re-generate</button>
+                <button id="send-tags" class="send-btn">Send to Site</button>
             </div>
         </div>
 
-        <button id="bulk-send">📤 Send All to Site</button>
+        <button id="bulk-send">Send All to Site</button>
     </div>
-
-    <script src="scripts/config.js"></script>
-    <script src="scripts/Popup.js"></script>
 </body>
 
 </html>

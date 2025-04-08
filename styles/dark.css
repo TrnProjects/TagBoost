@@ -1,3 +1,4 @@
+/* 🌌 DARK TEMA */
 body {
     background-image: url("../Images/dark.png") !important;
     background-size: cover !important;
@@ -21,23 +22,20 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-/* Osiguraj da unutarnji elementi imaju odgovarajući kontrast */
+/* Kontrast */
 .popup-container * {
     color: rgb(255, 255, 255) !important;
     background: none !important;
     border-color: rgba(255, 192, 203, 0.5) !important;
 }
 
-/* 📏 Smanjen razmak između input polja (Title, Description) i gumbiju ispod */
+/* Razmak input polja */
 .input-group textarea {
     margin-bottom: -10px !important;
 }
 
-
-/* 📏 Povećan razmak između gumba i sljedeće sekcije (Description, SEO Tags) */
 .button-group {
     margin-bottom: 15px !important;
-    /* Povećava razmak (žuti okvir) */
 }
 
 /* Dugmad */
@@ -48,4 +46,11 @@ button {
 
 button:hover {
     background: rgba(255, 192, 203, 0.5) !important;
+}
+
+/* 🖼️ Vizualni feedback kod dragover */
+#drop-area.dragover {
+    background-color: rgba(255, 192, 203, 0.15) !important;
+    border-color: rgba(255, 192, 203, 0.8) !important;
+    transition: all 0.3s ease-in-out;
 }

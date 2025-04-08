@@ -1,10 +1,11 @@
-/* 🎨 GLOBALNA TEMA + VARIJABLE */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* 📌 GLOBALNI STILOVI */
+html,
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-color, #f8f8f8);
-    color: var(--text-color, #333);
-    background-size: cover !important;
-    background-position: center !important;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f4f2;
+    color: #333;
     margin: 0;
     padding: 0;
     width: 100vw;
@@ -12,31 +13,36 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background-size: cover !important;
+    background-position: center !important;
     transition: opacity 0.5s ease-in-out;
 }
 
 /* 📦 POPUP KONTEJNER */
-.popup-container,
-#popup-container {
-    flex-grow: 1;
+.popup-container {
     width: 100%;
     height: 100%;
-    padding: 10px;
+    flex-grow: 1;
+    overflow: auto;
     box-sizing: border-box;
-    overflow-x: auto;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.popup-container>* {
+    width: auto !important;
+    min-width: 100% !important;
+    max-width: none !important;
+}
+
 /* 🖼️ DROP AREA */
 #drop-area {
     width: 100%;
-    max-width: 350px;
+    max-width: none;
     padding: 15px;
-    border: 2px dashed var(--border-color, #999);
-    background-color: var(--box-bg, #fff);
+    border: 2px dashed #007bff;
+    background-color: #fff;
     cursor: pointer;
     text-align: center;
     display: flex;
@@ -44,26 +50,25 @@ body {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-    margin-bottom: 10px;
     box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 #drop-area.dragover {
-    background-color: var(--dragover-bg, #d0f0ff);
-    border-color: var(--highlight-color, #007bff);
+    background-color: #d0f0ff;
+    border-color: #007bff;
 }
 
-/* 🖼️ IMAGE PREVIEW BOX */
+/* 🖼️ IMAGE BOX */
 #image-box {
     width: 100%;
-    max-width: 320px;
     height: 180px;
     overflow: hidden;
-    border: 2px solid var(--border-color, #ccc);
+    border: 2px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--box-bg, #f8f8f8);
+    background-color: #f8f8f8;
     box-sizing: border-box;
 }
 
@@ -76,11 +81,10 @@ body {
     display: block;
 }
 
-/* ✍️ INPUT GRUPE */
+/* ✍️ INPUT POLJA */
 .input-group {
-    width: 100%;
-    max-width: 350px;
-    margin-bottom: 10px;
+    width: calc(100% - 20px);
+    margin-bottom: 0px;
     box-sizing: border-box;
 }
 
@@ -88,91 +92,96 @@ body {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: var(--text-color, black);
+    color: #6c5b7b;
+}
+
+.input-group textarea {
+    margin-bottom: 5px !important;
 }
 
 textarea {
     width: 100%;
     min-height: 60px;
-    resize: none;
-    padding: 5px;
+    padding: 10px;
     font-size: 14px;
-    background-color: var(--input-bg, #fff);
-    color: var(--text-color, black);
-    border: 1px solid var(--border-color, #ccc);
-    border-radius: 5px;
+    border: 1px solid #c7b9d6;
+    border-radius: 8px;
+    background: #f8f4f2;
     box-sizing: border-box;
 }
 
 #description {
-    min-height: 120px;
+    min-height: 120px !important;
 }
 
-/* 🧩 GUMBI GRUPA */
+/* 🧩 GUMBI */
 .button-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 5px;
     padding: 0;
+    margin-bottom: 15px;
+}
+
+.re-gen-btn,
+.regen-btn,
+.send-btn {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .re-gen-btn,
 .regen-btn {
     flex: 1;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--button-bg, #007bff);
-    color: var(--button-text, white);
+    background-color: #6c5b7b;
+    color: white;
 }
 
 .send-btn {
     flex: 0;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: bold;
     white-space: nowrap;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    background-color: var(--button-bg, #007bff);
-    color: var(--button-text, white);
+    background-color: #eac8cf;
+    color: #6c5b7b;
 }
 
 .re-gen-btn:hover,
-.regen-btn:hover,
-.send-btn:hover {
-    background-color: var(--button-hover, #0056b3);
+.regen-btn:hover {
+    background-color: #4a3b57;
 }
 
-/* 📤 SEND ALL BUTTON */
+.send-btn:hover {
+    background-color: #d9a7af;
+}
+
+/* 📤 DUGME ZA SVE */
 #bulk-send {
     margin-top: 15px;
-    background-color: var(--bulk-bg, #28a745);
-    color: var(--button-text, white);
+    background-color: #ff9800;
+    color: white;
     padding: 12px;
     border: none;
     cursor: pointer;
     width: 100%;
-    max-width: 350px;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
 }
 
 #bulk-send:hover {
-    background-color: var(--bulk-hover, #218838);
+    background-color: #e68a00;
 }
 
-/* 🎨 THEME SELECTOR */
+/* 🎨 TEMA SELECTOR */
 .theme-container select#theme-select {
     background: transparent !important;
-    color: var(--text-color, black) !important;
-    border: 1px solid var(--border-color, #ccc) !important;
+    color: #494747 !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
 
 .theme-container select#theme-select:focus {
@@ -183,4 +192,24 @@ textarea {
 .theme-container select option {
     background-color: #c2b5ad !important;
     color: #2a2a2a !important;
+}
+
+/* 🎯 Gumb za generiranje sadržaja */
+#fillData {
+    margin-top: 10px;
+    background-color: #6c5b7b;
+    color: white;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#fillData:hover {
+    background-color: #4a3b57;
 }

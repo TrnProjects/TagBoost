@@ -1,0 +1,46 @@
+Folder PATH listing for volume Data
+Volume serial number is A03D-1162
+D:.
+³   .gitignore
+³   background.js
+³   manifest.json
+³   popup.css
+³   popup.html
+³   README.md
+³   repo-struktura.txt
+³   
+ÃÄÄÄassets
+³       icon_128.png
+³       icon_48.png
+³       
+ÃÄÄÄdata
+³       popular_tags.json
+³       
+ÃÄÄÄModel_T_v0.2
+³   ³   background.js
+³   ³   Chat Hitory.odt
+³   ³   content.js
+³   ³   manifest.json
+³   ³   popup.html
+³   ³   Trenutno stanje.odt
+³   ³   
+³   ÃÄÄÄassets
+³   ³       icon_128.png
+³   ³       icon_48.png
+³   ³       
+³   ÃÄÄÄscripts
+³   ³       Popup.js
+³   ³       
+³   ÀÄÄÄstyles
+³           Style.css
+³           
+ÃÄÄÄscripts
+³       autofill-content.js
+³       config.js
+³       content.js
+³       Popup.js
+³       
+ÀÄÄÄstyles
+        default.css
+        Style.css
+        
