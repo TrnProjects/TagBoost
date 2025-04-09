@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "TagBoost - Etsy & Redbubble AI Uploader & Design Customizer",
-    "version": "1.4",
+    "version": "1.5.1",
     "description": "Automatski popunjava Etsy i Redbubble oglase, optimizira SEO i prilagođava dizajn ekstenzije.",
     "permissions": [
         "tabs",
@@ -21,31 +21,12 @@
         "https://*.redbubble.com/*",
         "https://api.openai.com/*"
     ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "popup.html",
-                "styles/*.css",
-                "images/*.jpg",
-                "Images/*.png",
-                "Images/*.jpg",
-                "scripts/config.js"
-            ],
-            "matches": [
-                "<all_urls>"
-            ]
-        }
-    ],
     "background": {
         "service_worker": "background.js",
         "type": "module"
     },
     "action": {
         "default_title": "TagBoost"
-    },
-    "icons": {
-        "48": "assets/icon_48.png",
-        "128": "assets/icon_128.png"
     },
     "content_scripts": [
         {
@@ -63,6 +44,25 @@
             "run_at": "document_idle"
         }
     ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "popup.html",
+                "scripts/popup.js",
+                "scripts/config.js",
+                "styles/*.css",
+                "images/*.jpg",
+                "images/*.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "icons": {
+        "48": "assets/icon_48.png",
+        "128": "assets/icon_128.png"
+    },
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self';"
     }

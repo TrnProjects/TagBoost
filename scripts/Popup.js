@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const themeSelector = document.getElementById("theme-select");
     const themeStylesheet = document.getElementById("theme-stylesheet");
     const body = document.body;
+    const titleHistoryKey = "title_history";
+
+
 
     // ✅ Glatka promjena teme
     body.style.transition = "opacity 0.5s ease-in-out";
@@ -104,38 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
             dropdown.appendChild(item);
         });
     }
-    descriptionField.addEventListener("mouseenter", () => {
-        chrome.storage.local.get([descriptionHistoryKey], function (result) {
-            const history = result[descriptionHistoryKey] || [];
-            if (history.length > 0) {
-                renderHistory(descriptionHistoryDropdown, history, "description");
-                descriptionHistoryDropdown.classList.remove("hidden");
-            }
-        });
-    });
-
-
-    descriptionField.addEventListener("mouseleave", () => {
-        setTimeout(() => {
-            descriptionHistoryDropdown.classList.add("hidden");
-        }, 300);
-    });
-
-    tagsField.addEventListener("mouseenter", () => {
-        chrome.storage.local.get([tagsHistoryKey], function (result) {
-            const history = result[tagsHistoryKey] || [];
-            if (history.length > 0) {
-                renderHistory(tagsHistoryDropdown, history, "tags");
-                tagsHistoryDropdown.classList.remove("hidden");
-            }
-        });
-    });
-
-    tagsField.addEventListener("mouseleave", () => {
-        setTimeout(() => {
-            tagsHistoryDropdown.classList.add("hidden");
-        }, 300);
-    });
 
     document.getElementById("regen-description").addEventListener("click", () => {
         saveToHistory("description", descriptionHistoryKey, descriptionHistoryDropdown, descriptionField.value);
@@ -144,17 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("regen-tags").addEventListener("click", () => {
         saveToHistory("tags", tagsHistoryKey, tagsHistoryDropdown, tagsField.value);
     });
-
-    document.getElementById("fillData").addEventListener("click", () => {
-        setTimeout(() => {
-            saveToHistory("description", descriptionHistoryKey, descriptionHistoryDropdown, descriptionField.value);
-            saveToHistory("tags", tagsHistoryKey, tagsHistoryDropdown, tagsField.value);
-        }, 2000);
-    });
-
-    // 🔽 Local History - samo za Title
-    const titleHistoryKey = "title_history";
-    const titleHistoryDropdown = document.getElementById("title-history-dropdown");
 
     // Sprema unos u lokalnu memoriju
     function saveTitleToHistory(newTitle) {
@@ -170,45 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-
-    function renderTitleHistory(historyArray) {
-        if (!titleHistoryDropdown) return;
-        titleHistoryDropdown.innerHTML = "";
-        historyArray.forEach(title => {
-            const item = document.createElement("div");
-            item.className = "history-item";
-            item.textContent = title;
-            item.title = "Klikni za ubaciti ovaj naslov";
-            item.addEventListener("click", () => {
-                titleField.value = title;
-            });
-            titleHistoryDropdown.appendChild(item);
-        });
-    }
-
-    titleField.addEventListener("mouseenter", () => {
-        chrome.storage.local.get([titleHistoryKey], function (result) {
-            const history = result[titleHistoryKey] || [];
-            renderTitleHistory(history);
-            titleHistoryDropdown.classList.remove("hidden");
-        });
-    });
-
-    titleField.addEventListener("mouseleave", () => {
-        setTimeout(() => {
-            titleHistoryDropdown.classList.add("hidden");
-        }, 300);
-    });
-    // Spremanje unosa svaki put kad se klikne "Generate" ili "Regen"
-    document.getElementById("regen-title").addEventListener("click", () => {
-        saveTitleToHistory(titleField.value);
-    });
-    document.getElementById("fillData").addEventListener("click", () => {
-        // Spremi ga kasnije kad dođe novi response
-        setTimeout(() => {
-            saveTitleToHistory(titleField.value);
-        }, 2000);
-    });
 
     document.getElementById("regen-title").addEventListener("click", () => {
         regenerate("title");
@@ -341,6 +262,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 descriptionField.value = description;
                 tagsField.value = tags.join(", ");
 
+                // ✅ SPREMANJE
+                saveTitleToHistory(title);
+                saveToHistory("description", "description_history", null, description);
+                saveToHistory("tags", "tags_history", null, tags.join(", "));
+
                 console.log("📌 AI Response Title:", title);
                 console.log("📌 AI Response Description:", description);
                 console.log("📌 AI Response Tags:", tags);
@@ -390,14 +316,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 case "title":
                     titleField.dataset.original = titleField.value;
                     titleField.value = newText;
+                    saveTitleToHistory(newText);
                     break;
                 case "description":
                     descriptionField.dataset.original = descriptionField.value;
                     descriptionField.value = newText;
+                    saveToHistory("description", "description_history", null, newText);
                     break;
                 case "tags":
                     tagsField.dataset.original = tagsField.value;
                     tagsField.value = newText;
+                    saveToHistory("tags", "tags_history", null, newText);
                     break;
             }
 
@@ -407,6 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("⚠️ Greška u regeneraciji teksta:", err);
         }
     }
+
 
     function regenerate(field) {
         let originalText = "";
@@ -494,4 +424,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log(`📤 Poslano polje: ${field} →`, value);
     }
+    const showHistoryBtn = document.getElementById("show-title-history");
+    const titleHistoryDropdown = document.getElementById("title-history-dropdown");
+
+    // Klik na "History" gumb
+    showHistoryBtn.addEventListener("click", () => {
+        chrome.storage.local.get(["title_history"], function (result) {
+            const history = result["title_history"] || [];
+
+            if (titleHistoryDropdown.classList.contains("hidden")) {
+                renderTitleDropdown(history);
+                titleHistoryDropdown.classList.remove("hidden");
+            } else {
+                titleHistoryDropdown.classList.add("hidden");
+            }
+        });
+    });
+
+    // Renderanje dropdowna
+    function renderTitleDropdown(historyArray) {
+        titleHistoryDropdown.innerHTML = "";
+
+        historyArray.forEach((entry, index) => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            item.textContent = entry;
+
+            item.addEventListener("click", () => {
+                titleField.value = entry;
+                titleHistoryDropdown.classList.add("hidden");
+            });
+
+            // Gumb za brisanje
+            const delBtn = document.createElement("span");
+            delBtn.textContent = "🗑️";
+            delBtn.className = "delete-btn";
+            delBtn.title = "Obriši ovaj unos";
+
+            delBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Ne trigerira ubacivanje u field
+                historyArray.splice(index, 1);
+                chrome.storage.local.set({ "title_history": historyArray }, () => {
+                    renderTitleDropdown(historyArray);
+                });
+            });
+
+            item.appendChild(delBtn);
+            titleHistoryDropdown.appendChild(item);
+        });
+
+        if (historyArray.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "history-empty";
+            empty.textContent = "Nema spremljenih prijedloga.";
+            titleHistoryDropdown.appendChild(empty);
+        }
+    }
+
+    // Zatvori dropdown klikom izvan
+    document.addEventListener("click", (e) => {
+        const within = e.target.closest("#title-history-dropdown") || e.target.closest("#show-title-history");
+        if (!within) {
+            titleHistoryDropdown.classList.add("hidden");
+        }
+    });
 });

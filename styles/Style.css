@@ -30,8 +30,8 @@ body {
 }
 
 .popup-container>* {
-    width: auto !important;
-    min-width: 100% !important;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* === DROP AREA === */
@@ -66,11 +66,13 @@ body {
     background-color: #f8f8f8;
 }
 
-/* === TEXTAREE === */
+/* === INPUTI === */
 .input-group {
     width: calc(100% - 20px);
     box-sizing: border-box;
     margin-bottom: 0px;
+    position: relative;
+    /* ✅ Dodaj ovo */
 }
 
 .input-group label {
@@ -103,11 +105,13 @@ textarea {
     align-items: center;
     margin-top: 5px;
     margin-bottom: 15px;
+    gap: 6px;
 }
 
 .re-gen-btn,
 .regen-btn,
-.send-btn {
+.send-btn,
+.history-btn {
     padding: 10px;
     font-size: 14px;
     font-weight: bold;
@@ -115,24 +119,25 @@ textarea {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
+    flex: 1;
 }
 
 .re-gen-btn,
-.regen-btn {
-    flex: 1;
+.regen-btn,
+.history-btn {
     background-color: #6c5b7b;
     color: white;
 }
 
 .send-btn {
-    flex: 0;
     background-color: #eac8cf;
     color: #6c5b7b;
     white-space: nowrap;
 }
 
 .re-gen-btn:hover,
-.regen-btn:hover {
+.regen-btn:hover,
+.history-btn:hover {
     background-color: #4a3b57;
 }
 
@@ -160,7 +165,7 @@ textarea {
     background-color: #4a3b57;
 }
 
-/* === TEMA SELECTOR === */
+/* === THEME SELECTOR === */
 .theme-container select#theme-select {
     background: transparent !important;
     color: #494747 !important;
@@ -177,150 +182,95 @@ textarea {
     color: #2a2a2a !important;
 }
 
-/* === HISTORY DROPDOWN ZA TITLE === */
-#title-history-container {
-    position: relative;
+/* === TITLE HISTORY DROPDOWN === */
+#title-history-dropdown {
+    position: absolute;
+    background-color: #ffffff !important;
+    /* bijela pozadina */
+    color: #2a2a2a !important;
+    /* tamno siva boja teksta */
+    border: 1px solid #ccc;
+    /* okvir oko dropdowna */
+    border-radius: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 8px;
     width: 100%;
-    z-index: 1000;
     margin-top: 5px;
 }
 
-
-#title-history-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #ffffff !important;
-    color: #222 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 6px !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+#title-history-dropdown.hidden {
     display: none;
-    max-height: 200px;
-    overflow-y: auto;
+}
+
+.history-item {
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease;
     font-size: 13px;
 }
 
-
-
-/* Hover aktivacija – SAMO kad je miš nad #title ili dropdownom */
-#title:hover+#title-history-container .history-dropdown,
-#title-history-container:hover .history-dropdown {
-    display: block !important;
+.history-item:hover {
+    background-color: #eaeaea;
 }
 
-/* Stavke unutar dropdowna */
+.history-item .delete-btn {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #888;
+}
+
+.history-item .delete-btn:hover {
+    color: #d00;
+}
+
+.history-empty {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
 
 #title-history-dropdown .history-item {
-    padding: 6px 8px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    color: #333;
+    padding: 6px 10px;
+    margin-bottom: 4px;
     background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    /* tamno siva crta */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #2a2a2a;
+    /* tamno siva boja teksta */
+    transition: background-color 0.2s ease;
+    position: relative;
 }
 
 #title-history-dropdown .history-item:hover {
     background-color: #f3f0f5;
+    /* blago siva pri hoveru */
 }
 
-#title-history-dropdown .history-item:last-child {
-    border-bottom: none;
-}
-
-/* Tooltip */
-.history-item .tooltip {
-    visibility: hidden;
-    background-color: #444;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
+.history-item .delete-btn {
     position: absolute;
-    z-index: 20;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.history-item:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Gumbi uz svaku verziju (ako dodamo u budućnosti) */
-.history-actions {
-    display: flex;
-    gap: 6px;
-}
-
-.history-actions button {
-    background: none;
-    border: none;
+    right: 8px;
+    top: 6px;
     cursor: pointer;
     font-size: 14px;
-    padding: 0 2px;
-    color: #777;
+    color: #888;
+    /* neutralna siva */
 }
 
-.history-actions button:hover {
-    color: #000;
-}
-
-/* Favoriti */
-.favorite {
-    color: gold;
-    font-weight: bold;
-}
-
-/* === HISTORY DROPDOWN ZA DESCRIPTION === */
-#description-history-container {
-    margin-top: 5px;
-    background-color: #ffffff !important;
-    color: #222 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 6px !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-    display: none;
-    max-height: 200px;
-    overflow-y: auto;
-    font-size: 13px;
-    z-index: 1000;
-}
-
-/* Isto za TAGS */
-#tags-history-container {
-    margin-top: 5px;
-    background-color: #ffffff !important;
-    color: #222 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 6px !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-    display: none;
-    max-height: 200px;
-    overflow-y: auto;
-    font-size: 13px;
-    z-index: 1000;
-}
-
-#description:hover+#description-history-container,
-#description-history-container:hover {
-    display: block !important;
-}
-
-#tags:hover+#tags-history-container,
-#tags-history-container:hover {
-    display: block !important;
-}
-
-/* 🎯 Forsiraj tamnu boju teksta samo za history dropdown */
-#title-history-dropdown .history-item {
-    color: #2a2a2a !important;
-    background-color: #fff !important;
+.history-item .delete-btn:hover {
+    color: #d00;
+    /* crveno na hover */
 }

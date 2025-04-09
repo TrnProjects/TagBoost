@@ -38,7 +38,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     // 🔍 Nađi aktivni tab s Redbubble upload formom
     chrome.tabs.query({
-        url: "https://www.redbubble.com/portfolio/images/new*"
+        url: [
+            "https://www.redbubble.com/portfolio/images/new*",
+            "https://redbubble.com/portfolio/images/new*",
+            "https://www.redbubble.com/portfolio/images/*",
+            "https://redbubble.com/portfolio/images/*"
+        ]
     }, (tabs) => {
         if (tabs.length === 0) {
             console.error("❌ Nema otvorenog Redbubble taba za upload!");
