@@ -426,7 +426,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const showHistoryBtn = document.getElementById("show-title-history");
     const titleHistoryDropdown = document.getElementById("title-history-dropdown");
+    const showDescHistoryBtn = document.getElementById("show-description-history");
+    const showTagsHistoryBtn = document.getElementById("show-tags-history");
 
+    showDescHistoryBtn.addEventListener("click", () => {
+        chrome.storage.local.get(["description_history"], function (result) {
+            const history = result["description_history"] || [];
+            if (descriptionHistoryDropdown.classList.contains("hidden")) {
+                renderDescriptionDropdown(history);
+                descriptionHistoryDropdown.classList.remove("hidden");
+            } else {
+                descriptionHistoryDropdown.classList.add("hidden");
+            }
+        });
+    });
+
+    showTagsHistoryBtn.addEventListener("click", () => {
+        chrome.storage.local.get(["tags_history"], function (result) {
+            const history = result["tags_history"] || [];
+            if (tagsHistoryDropdown.classList.contains("hidden")) {
+                renderTagsDropdown(history);
+                tagsHistoryDropdown.classList.remove("hidden");
+            } else {
+                tagsHistoryDropdown.classList.add("hidden");
+            }
+        });
+    });
     // Klik na "History" gumb
     showHistoryBtn.addEventListener("click", () => {
         chrome.storage.local.get(["title_history"], function (result) {
@@ -480,6 +505,81 @@ document.addEventListener("DOMContentLoaded", function () {
             titleHistoryDropdown.appendChild(empty);
         }
     }
+    function renderDescriptionDropdown(historyArray) {
+        descriptionHistoryDropdown.innerHTML = "";
+
+        historyArray.forEach((entry, index) => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            item.textContent = entry;
+
+            item.addEventListener("click", () => {
+                descriptionField.value = entry;
+                descriptionHistoryDropdown.classList.add("hidden");
+            });
+
+            const delBtn = document.createElement("span");
+            delBtn.textContent = "🗑️";
+            delBtn.className = "delete-btn";
+            delBtn.title = "Obriši ovaj unos";
+
+            delBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                historyArray.splice(index, 1);
+                chrome.storage.local.set({ "description_history": historyArray }, () => {
+                    renderDescriptionDropdown(historyArray);
+                });
+            });
+
+            item.appendChild(delBtn);
+            descriptionHistoryDropdown.appendChild(item);
+        });
+
+        if (historyArray.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "history-empty";
+            empty.textContent = "Nema spremljenih prijedloga.";
+            descriptionHistoryDropdown.appendChild(empty);
+        }
+    }
+    function renderTagsDropdown(historyArray) {
+        tagsHistoryDropdown.innerHTML = "";
+
+        historyArray.forEach((entry, index) => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            item.textContent = entry;
+
+            item.addEventListener("click", () => {
+                tagsField.value = entry;
+                tagsHistoryDropdown.classList.add("hidden");
+            });
+
+            const delBtn = document.createElement("span");
+            delBtn.textContent = "🗑️";
+            delBtn.className = "delete-btn";
+            delBtn.title = "Obriši ovaj unos";
+
+            delBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                historyArray.splice(index, 1);
+                chrome.storage.local.set({ "tags_history": historyArray }, () => {
+                    renderTagsDropdown(historyArray);
+                });
+            });
+
+            item.appendChild(delBtn);
+            tagsHistoryDropdown.appendChild(item);
+        });
+
+        if (historyArray.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "history-empty";
+            empty.textContent = "Nema spremljenih prijedloga.";
+            tagsHistoryDropdown.appendChild(empty);
+        }
+    }
+
 
     // Zatvori dropdown klikom izvan
     document.addEventListener("click", (e) => {

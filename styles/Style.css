@@ -183,6 +183,8 @@ textarea {
 }
 
 /* === TITLE HISTORY DROPDOWN === */
+#description-history-dropdown,
+#tags-history-dropdown,
 #title-history-dropdown {
     position: absolute;
     background-color: #ffffff !important;
@@ -201,6 +203,8 @@ textarea {
     margin-top: 5px;
 }
 
+#description-history-dropdown.hidden,
+#tags-history-dropdown.hidden,
 #title-history-dropdown.hidden {
     display: none;
 }
@@ -240,24 +244,27 @@ textarea {
     padding: 10px;
 }
 
-#title-history-dropdown .history-item {
+#title-history-dropdown .history-item,
+#description-history-dropdown .history-item,
+#tags-history-dropdown .history-item {
     padding: 6px 10px;
     margin-bottom: 4px;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    /* tamno siva crta */
+    background-color: #fff !important;
+    border-bottom: 1px solid #ccc !important;
+    /* crta između stavki */
     border-radius: 4px;
     cursor: pointer;
     font-size: 13px;
-    color: #2a2a2a;
-    /* tamno siva boja teksta */
+    color: #2a2a2a !important;
     transition: background-color 0.2s ease;
     position: relative;
 }
 
-#title-history-dropdown .history-item:hover {
-    background-color: #f3f0f5;
-    /* blago siva pri hoveru */
+#title-history-dropdown .history-item:hover,
+#description-history-dropdown .history-item:hover,
+#tags-history-dropdown .history-item:hover {
+    background-color: #f3f0f5 !important;
+    /* sivo na hover */
 }
 
 .history-item .delete-btn {

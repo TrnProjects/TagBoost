@@ -57,23 +57,31 @@
         </div>
 
         <!-- 📝 Opis -->
-        <div class="input-group">
+        <div class="input-group" style="position: relative;">
             <label for="description">Description:</label>
             <textarea id="description"></textarea>
             <div class="button-group">
                 <button id="regen-description" class="regen-btn">Re-generate</button>
+                <button id="show-description-history" class="history-btn">History</button>
                 <button id="send-description" class="send-btn">Send to Site</button>
             </div>
+
+            <!-- 🔽 History dropdown za Description -->
+            <div id="description-history-dropdown" class="history-dropdown hidden"></div>
         </div>
 
         <!-- 🏷️ SEO tagovi -->
-        <div class="input-group">
+        <div class="input-group" style="position: relative;">
             <label for="tags">SEO Tags:</label>
             <textarea id="tags"></textarea>
             <div class="button-group">
                 <button id="regen-tags" class="regen-btn">Re-generate</button>
+                <button id="show-tags-history" class="history-btn">History</button>
                 <button id="send-tags" class="send-btn">Send to Site</button>
             </div>
+
+            <!-- 🔽 History dropdown za Tags -->
+            <div id="tags-history-dropdown" class="history-dropdown hidden"></div>
         </div>
 
         <button id="bulk-send">Send All to Site</button>
