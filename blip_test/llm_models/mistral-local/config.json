@@ -1,0 +1,5 @@
+{
+    "name": "Mistral Local",
+    "description": "Manually imported Mistral 7B instruct model",
+    "format": "gguf"
+}

@@ -14,3 +14,15 @@ Thumbs.db
 
 # Chrome extension artifacts
 *.zip
+# Lokalna analiza slike
+*.jpg
+*.jpeg
+*.png
+*.gguf
+*.pt
+*.bin
+*.ckpt
+__pycache__/
+venv/
+image_analysis/*.txt
+image_analysis/__pycache__/
